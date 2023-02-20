@@ -1,90 +1,34 @@
 <template>
-    <div class="container">
-      <div class="index">
-        <img src="../../../images/index.png">
-      </div>
+  <div class="container">
+    <div class="index">
+      <img src="../../../images/index.png">
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    name:"index",
-    data() {
-      return {
-        username: '',
-        password: '',
-        token: '',
-      };
-    },
-    methods: {
-      async login() {
-        try {
-          const response = await axios.post('http://127.0.0.1:8000/api/token', {
-            username: this.username,
-            password: this.password,
-          });
-          localStorage.setItem("access_token", response.data.access)
-          // this.token = response.data.access;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-    },
-  };
-  </script>
-  
-  <style>
-/* index */
-.index {
-            text-align: center;
-            display: table;
-        }
-        .index img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+<script>
+import axios from 'axios';
 
-        /* menubar */
-        #menu-wrapper {
-            overflow-x: auto;  
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            border-collapse: collapse;
-            height: 43px;
-        }
-        #menu-tab {
-            background-color: #393D46;
-        }
-        #menu-tab i {
-            font-size: 20px;
-        }
-        table {
-            background-color: #333;
-            border-collapse: collapse;
-            width: 200%;
-            height: 43px;
-        }
-        th, td {
-            text-align: center;
-        }
-        th {
-            background-color: #333;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: auto;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 13px;
-        }
-  </style>
+export default {
+  name:"index",
+  data() {
+
+  },
+  methods: {
+
+  },
+};
+</script>
+  
+<style scoped>
+  /* index */
+  .index {
+      text-align: center;
+      display: table;
+  }
+  .index img {
+      max-width: 100%;
+      max-height: 100%;
+  }
+</style>
   
