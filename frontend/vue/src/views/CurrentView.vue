@@ -4,25 +4,25 @@
     {{stock.stockName}}
   </div>
   <div class="top_nav">
-            <a href="#"><img src="./images/arrow.png"></a>
+            <a href="#"><img src="../../../images/arrow.png"></a>
             <!-- <select id="stockList" v-model="selected">
                 <option v-for="option in options" :value="option.price">{{ option.stock }}</option>
             </select> -->
-            <a href="./stock1.html"><img src="./images/search.png"></a>    
-            <a @click="openModal = true"><img src="./images/cart.png"></a>
-            <a href="#"><img src="./images/order.png"></a>
-            <a href="#"><img src="./images/more.png"></a>
+            <a href="./stock1.html"><img src="../../../images/search.png"></a>    
+            <a @click="openModal = true"><img src="../../../images/cart.png"></a>
+            <a href="#"><img src="../../../images/order.png"></a>
+            <a href="#"><img src="../../../images/more.png"></a>
         </div>
         <!-- Modal -->
         <div id="modal-container" class="black-bg" v-if="openModal == true">
             <div class="white-bg">
-                <div class="cartcheck"><img src="./images/cartcheck.png"></div>
+                <div class="cartcheck"><img src="../../../images/cartcheck.png"></div>
                 <button @click="close($event)" class="close">취소</button>
                 <button @click="check($event)" class="check">확인</button>
             </div>
         </div>
         <div>
-            <img src="images/stockn.png">
+            <img src="../../../images/stockn.png">
         </div>
 
   </div>
