@@ -4,7 +4,9 @@
 </template>
 
 <script>
+
 import TabBar from './components/TabBar.vue'
+
 export default {
   components: {TabBar}
 }

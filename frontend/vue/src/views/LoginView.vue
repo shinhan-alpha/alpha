@@ -1,54 +1,48 @@
 <template>
-    <div>
-      <div>
-        <h2>Please Log In</h2>
-        <div id="loginForm">
-          <form @submit.prevent="fnLogin">
-            <p>
-              <input class="w3-input" name="uid" placeholder="Enter your ID" v-model="user_id"><br>
-            </p>
-            <p>
-              <input name="password" class="w3-input" placeholder="Enter your password" v-model="user_pw" type="password">
-            </p>
-            <p>
-              <button type="submit" class="w3-button w3-green w3-round">Login</button>
-            </p>
-          </form>
-        </div>
-      </div>
+  <div class="container">
+    <div class="form-group mb-3">
+      <label for="username">아이디</label>
+      <input type="text" class="form-control" v-model="username" />
     </div>
-  </template>
-  
-  <script>
-  
-  export default {
-    data() {
-      return {
-        user_id: '',
-        user_pw: ''
+    <div class="form-group mb-3">
+      <label for="password">비밀번호</label>
+      <input type="password" class="form-control" v-model="password" />
+    </div>
+    <div class="text-right">
+      <button type="button" class="btn btn-primary" @click="login">로그인</button>
+    </div>
+    <div v-if="token" id="token">{{ token }}</div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      token: '',
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/token', {
+          username: this.username,
+          password: this.password,
+        });
+        localStorage.setItem("access_token", response.data.access)
+        // this.token = response.data.access;
+      } catch (error) {
+        console.log(error);
       }
     },
-    methods: {
-      fnLogin() {
-        if (this.user_id === '') {
-          alert('ID를 입력하세요.')
-          return
-        }
-  
-        if (this.user_pw === '') {
-          alert('비밀번호를 입력하세요.')
-          return
-        }
-  
-        alert('로그인 되었습니다.')
-      }
-    }
-  }
-  </script>
-  
-  <style>
-  #loginForm {
-    width: 500px;
-    margin: auto;
-  }
-  </style>
+  },
+};
+</script>
+
+<style>
+/* Insert your CSS styles here */
+</style>
