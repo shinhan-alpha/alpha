@@ -2,7 +2,8 @@
     <div id="menu-wrapper">
             <table>
                 <tr>
-                    <th><router-link to="/home">홈</router-link></th>
+                    
+                    <th><router-link to="/index">홈</router-link></th>
                     <th><router-link to="/interest">관심<br>종목</router-link></th>
                     <th><router-link to="/current">현재가</router-link></th>
                     <th><router-link to="/order">주식<br>주문</router-link></th>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+
 export default {
 }
 </script>
