@@ -45,58 +45,58 @@ export default {
 }
 </script>
 
-<style>
-#login-page {
-  background-image: url('https://cdn.pixabay.com/photo/2015/09/04/23/22/facebook-923828_1280.jpg');
-  background-size: cover;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+<style scoped>
+  #login-page {
+    background-image: url('https://cdn.pixabay.com/photo/2015/09/04/23/22/facebook-923828_1280.jpg');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-#login-form {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 40px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
+  #login-form {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
 
-h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #1877f2;
-}
+  h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1877f2;
+  }
 
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 20px;
-  font-size: 18px;
-}
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
 
-button {
-  background-color: #1877f2;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  height: 50px;
-  font-size: 20px;
-  cursor: pointer;
-  width: 100%;
-}
+  button {
+    background-color: #1877f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+  }
 
-.forgot-password {
-  margin-top: 20px;
-  text-align: center;
-}
+  .forgot-password {
+    margin-top: 20px;
+    text-align: center;
+  }
 
-a {
-  color: #1877f2;
-  text-decoration: none;
-}
+  a {
+    color: #1877f2;
+    text-decoration: none;
+  }
 </style>
