@@ -24,7 +24,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
     /* menubar */
     #menu-wrapper {
         overflow-x: auto;  

@@ -1,6 +1,6 @@
 <template>
   <div class="signup-page-container">
-    <img src="../../../images\shinhan_ci.jpg" style="width:350px; height:100px;" alt="My Image">
+    <img src="../../../images\shinhan_ci.jpg" style="width:280px; height:80px;" alt="My Image">
     <h2>신한투자증권 회원가입</h2>
     <form class="signup-form">
       <div class="form-group">
@@ -43,7 +43,7 @@ export default {
   methods: {
     login() {
       if (this.password !== this.password_check) {
-        alert("Passwords do not match");
+        alert("비밀번호 불일치!");
         return;
       }
 
@@ -57,16 +57,16 @@ export default {
       axios
         .post("http://127.0.0.1:8000/api/member", data)
         .then(() => {
-          alert("Sign up successful!");
+          alert("회원가입 성공!");
         })
         .catch((error) => {
           let errorMsg = "";
 
           if (error.response.data.password) {
-            errorMsg += "Password error";
+            errorMsg += "비밀번호 오류";
           }
           if (error.response.data.username) {
-            errorMsg += "\nName error";
+            errorMsg += "\n이름 오류";
           }
           if (errorMsg) {
             alert(errorMsg);
@@ -77,14 +77,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .signup-page-container {
-  width: 500px;
+  width: 320px;
   margin: 50px auto;
 }
 
 h2 {
-  font-size: 28px;
+  font-size: 24px;
   margin-bottom: 20px;
   font-weight: bold;
 }
@@ -95,24 +95,24 @@ h2 {
 
 .form-control {
   width: 100%;
-  height: 50px;
+  height: 40px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  padding: 10px;
-  font-size: 18px;
+  padding: 8px;
+  font-size: 16px;
 }
 
 .signup-btn {
   width: 100%;
-  height: 50px;
+  height: 40px;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
 .terms {
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 15px;
   line-height: 1.5;
   color: #65676b;
