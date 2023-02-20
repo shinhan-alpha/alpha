@@ -5,7 +5,7 @@
       </div>
       <div id="menus">
         <span id="portfolio">포트폴리오</span>
-        <button class="btn" id="create" onclick="location.href='create.html';">포트폴리오 생성</button>
+        <button class="btn" id="create" onclick="location.href='/create';">포트폴리오 생성</button>
         <button class="btn" id="recommend" onclick="location.href='#';">포트폴리오 추천</button>
         <button class="btn" id="current" onclick="location.href='#';">포트폴리오 현황</button>
         <button class="btn" id="master" onclick="location.href='#';">고수의 포트폴리오</button>
@@ -78,47 +78,6 @@ export default {
   .btn {
       border: none;
       background-color: white;
-  }
-
-  /* menubar */
-  #menu-wrapper {
-      overflow-x: auto;  
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      border-collapse: collapse;
-      height: 43px;
-  }
-  #menu-tab {
-      background-color: #393D46;
-  }
-  #menu-tab i {
-      font-size: 20px;
-  }
-  table {
-      background-color: #333;
-      border-collapse: collapse;
-      width: 200%;
-      height: 43px;
-  }
-  th, td {
-      text-align: center;
-  }
-  th {
-      background-color: #333;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      width: auto;
-  }
-  tr:nth-child(even) {
-      background-color: #f2f2f2;
-  }
-  a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 13px;
   }
 </style>
   

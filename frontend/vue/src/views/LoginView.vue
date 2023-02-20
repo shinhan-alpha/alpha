@@ -1,17 +1,17 @@
 <template>
   <div id="login-page">
     <div id="login-form">
-      <img src="../../../images\shinhan_ci.jpg" style="width:350px; height:100px;" alt="My Image">
+      <img src="../../../images\shinhan_ci.jpg" style="width:200px; height:50px;" alt="My Image">
       <h2>신한투자증권 로그인</h2>
       <form @submit.prevent="fnLogin">
         <div>
-          <input type="text" name="uid" placeholder="아이디" v-model="user_id">
+          <input type="text" name="uid" placeholder="아이디" v-model="user_id" style="height: 35px;">
         </div>
         <div>
-          <input type="password" name="password" placeholder="비밀번호" v-model="user_pw">
+          <input type="password" name="password" placeholder="비밀번호" v-model="user_pw" style="height: 35px;">
         </div>
         <div>
-          <button type="submit">로그인</button>
+          <button type="submit" style="height: 35px;">로그인</button>
         </div>
         <div class="forgot-password">
           <a href="#">비밀번호 찾기</a>
@@ -46,57 +46,59 @@ export default {
 </script>
 
 <style scoped>
-  #login-page {
-    background-image: url('https://cdn.pixabay.com/photo/2015/09/04/23/22/facebook-923828_1280.jpg');
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+#login-page {
+  background-image: url('https://cdn.pixabay.com/photo/2015/09/04/23/22/facebook-923828_1280.jpg');
+  background-size: cover;
+  height: 568px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  #login-form {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+#login-form {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  margin: 0 auto;
+}
 
-  h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #1877f2;
-  }
+h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #1877f2;
+}
 
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    height: 50px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 18px;
-  }
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
 
-  button {
-    background-color: #1877f2;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    height: 50px;
-    font-size: 20px;
-    cursor: pointer;
-    width: 100%;
-  }
+button {
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
 
-  .forgot-password {
-    margin-top: 20px;
-    text-align: center;
-  }
+.forgot-password {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
 
-  a {
-    color: #1877f2;
-    text-decoration: none;
-  }
+a {
+  color: #1877f2;
+  text-decoration: none;
+}
 </style>
