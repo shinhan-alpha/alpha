@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1>알파카트(일괄매수)</h1>
+        <h2>알파카트(일괄매수)</h2>
         <table>
             <thead>
             <tr>
@@ -15,20 +15,26 @@
                 <td><input type="checkbox" v-model="stock.checked" @click="stockClick(stock)"></td>
                 <td>{{ stock.name }}</td>
                 <td>{{ stock.price }}</td>
-                <td>{{ stock.quantity }}</td>
+                <td>
+                  <button type="button" @click="incrementQuantity(stock)">+</button>
+                  {{ stock.quantity }}
+                  <button type="button" @click="decrementQuantity(stock)">-</button>
+                </td>
             </tr>
             </tbody>
         </table>
-        <h1>주식 포트폴리오</h1>
-        <Pie :data="data" :options="options" />
-        <h2>주문금액(합계) <span id="myValue">0</span></h2>
-        <button type="button"><img src="../../../images/buy.png" alt="매수버튼"
-                onclick="modal"></button>
+        <h2>주식 포트폴리오</h2>
+        <Pie :data="chartData" :options="options" />
+        <h2>주문금액(합계) <span id="myValue">{{checkedStockPricesSum}}</span></h2>
+        <button type="button" @click="modal">
+          <img id="buy" src="../../../images/buy.png" alt="매수버튼"/>
+        </button>
+        <div style="max-height: 50px;"></div>
     </div>
 
   </template>
   
-  <script lang="js">
+  <script>
   import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
   import { Pie } from 'vue-chartjs'
   
@@ -42,30 +48,27 @@
     data() {
       return {
         stocks: [
-        { name: "LG전자", price: "113,000", quantity: "1", checked: false },
-        { name: "현대차", price: "179,200", quantity: "1", checked: false },
-        { name: "삼성전자", price: "62,600", quantity: "1", checked: false },
-        { name: "대우중공업", price: "100,000", quantity: "1", checked: false },
+        { name: "LG전자", price: "113,000", quantity: 1, checked: false },
+        { name: "현대차", price: "179,200", quantity: 1, checked: false },
+        { name: "삼성전자", price: "62,600", quantity: 1, checked: false },
+        { name: "대우중공업", price: "100,000", quantity: 1, checked: false },
         ],
-        data: {
-            labels: stocks.filter(stock => stock.checked).map(stock => stock.name),
-            datasets: [
-                {
-                backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                data: [40, 20, 80, 10]
-                }
-            ]
-        }
       }
     },
     computed:{
         checkedStocks() {
-      return this.stocks.filter(stock => stock.checked);
+          if(this.stocks){
+            return this.stocks.filter(stock => stock.checked);
+          }
+          return [];
+      
     },
     chartData() {
       const checkedStocks = this.checkedStocks;
       const checkedStockNames = checkedStocks.map(stock => stock.name);
-      const checkedStockPrices = checkedStocks.map(stock => Number(stock.price.replace(',', '')));
+      const checkedStockPrices = checkedStocks.map(stock => Number(stock.price.replace(',', ''))*stock.quantity);
+      const sum = checkedStockPrices.reduce((acc, val) => acc + val, 0);
+      this.checkedStockPricesSum = sum;
       return {
         labels: checkedStockNames,
         datasets: [
@@ -73,14 +76,23 @@
             backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
             data: checkedStockPrices
           }
-        ]
+        ],
+        checkedStockPricesSum: 0,
       };
     }
     },
     methods: {
-        stockClick(stock) {
-             stock.checked = true;
+      stockClick(stock) {
+        stock.checked = true;
+      },
+      incrementQuantity(stock) {
+        stock.quantity += 1;
+      },
+      decrementQuantity(stock) {
+        if (stock.quantity > 1){
+          stock.quantity -= 1;
         }
+      }
     }
   }
   </script>
@@ -108,5 +120,9 @@
 
         input[type=checkbox] {
             cursor: pointer;
+        }
+        #buy{
+          position: relative;
+          max-width: 200px;
         }
 </style>
