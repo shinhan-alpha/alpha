@@ -1,85 +1,138 @@
 <template>
-    <div id="app">
-      <h1>알파카트(일괄매수)</h1>
-      <div class="my-box" v-for="(stock, index) in stocks" :key="index">
-        <input type="checkbox" v-model="selectedStocks[index]" @change="updateChart" />
-        <span>{{ stock.name }} 현재가: {{ stock.price }} 수량: {{ stock.quantity }}</span>
-        <p>{{ selectedStocks[index] ? 'Selected' : '' }}</p>
-      </div>
-  
-      <h1>주식 포트폴리오</h1>
-      <div class="chart-container" style="position: relative; height:40vh; width:30vw">
-        <canvas id="myChart"></canvas>
-      </div>
-  
-      <h2>주문금액(합계) <span>{{ totalValue }}</span></h2>
-      <button type="button"><img src="images/매수버튼.PNG" alt="매수버튼" /></button>
+    <div>
+        <h1>알파카트(일괄매수)</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>선택</th>
+                    <th>종목</th>
+                    <th>현재가</th>
+                    <th>수량</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" v-model="checked[0]"></td>
+                    <td>LG전자</td>
+                    <td>113,000</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" v-model="checked[1]"></td>
+                    <td>현대차</td>
+                    <td>179,200</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" v-model="checked[2]"></td>
+                    <td>삼성전자</td>
+                    <td>62,600</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" v-model="checked[3]"></td>
+                    <td>대우중공업</td>
+                    <td>100,000</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+        <h1>주식 포트폴리오</h1>
+        <div class="chart-container" style="position: relative; height:80vh; width:80vw">
+            <canvas id="myChart"></canvas>
+        </div>
+        <h2>주문금액(합계) <span>{{ sum }}</span></h2>
+        <button type="button" @click="order"><img src="images/매수버튼.PNG" alt="매수버튼"></button>
     </div>
-  </template>
-  
-  <script>
-  import Chart from 'chart.js';
-  
-  export default {
+</template>
+<script>
+import Chart from 'chart.js';
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+export default {
     data() {
-      return {
-        stocks: [
-          { name: 'LG전자', price: 113000, quantity: 1 },
-          { name: '현대차', price: 179200, quantity: 1 },
-          { name: '삼성전자', price: 62600, quantity: 1 },
-          { name: '대우중공업', price: 100000, quantity: 1 },
-        ],
-        selectedStocks: [false, false, false, false],
-        chartData: {
-          labels: ['LG전자', '현대차', '삼성전자', '대우중공업'],
-          datasets: [
-            {
-              data: [0, 0, 0, 0],
-              backgroundColor: [
-                '#' + Math.floor(Math.random() * 16777215).toString(16),
-                '#' + Math.floor(Math.random() * 16777215).toString(16),
-                '#' + Math.floor(Math.random() * 16777215).toString(16),
-                '#' + Math.floor(Math.random() * 16777215).toString(16),
-              ],
-            },
-          ],
-        },
-        myChart: null,
-      };
-    },
-    computed: {
-      totalValue() {
-        return this.chartData.datasets[0].data.reduce((a, b) => a + b, 0);
-      },
+        return {
+            checked: [false, false, false, false],
+            stockPrices: [113000, 179200, 62600, 100000],
+            stockNumber: [1, 1, 1, 1],
+            sum: 0
+        };
     },
     mounted() {
-      const ctx = document.getElementById('myChart').getContext('2d');
-      this.myChart = new Chart(ctx, {
-        type: 'pie',
-        data: this.chartData,
-      });
+        this.createChart();
     },
     methods: {
-      updateChart() {
-        this.chartData.datasets[0].data = this.selectedStocks.map((selected, index) => {
-          if (selected) {
-            const stock = this.stocks[index];
-            return stock.price * stock.quantity;
-          } else {
-            return 0;
-          }
-        });
-        this.myChart.update();
-      },
+        createChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            this.myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['LG전자', '현대차', '삼성전자', '대우중공업'],
+                    datasets: [
+                        {
+                            data: [0, 0, 0, 0],
+                            backgroundColor: [
+                                '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                '#' + Math.floor(Math.random() * 16777215).toString(16)
+                            ]
+                        }
+                    ]
+                }
+            });
+            for (let i = 0; i < this.checked.length; i++) {
+                if (this.checked[i]) {
+                    this.myChart.data.datasets[0].data[i] += this.stockNumber * this.stockPrices[i];
+                }
+            }
+            this.myChart.update();
+        },
+        order() {
+            // Function to handle the order button click
+            console.log('Order button clicked');
+        }
     },
-  };
-  </script>
-  
-  <style>
-  .my-box {
-    width: 330px;
-    border: 1px solid;
-    padding: 5px;
-  }
-  </style>
-  
+    watch: {
+        checked: function (newChecked, oldChecked) {
+            // Update chart data and sum value when a checkbox is checked or unchecked
+            for (let i = 0; i < newChecked.length; i++) {
+                if (newChecked[i]) {
+                    this.myChart.data.datasets[0].data[i] += this.stockNumber[i] * this.stockPrices[i];
+                } else {
+                    this.myChart.data.datasets[0].data[i] -= this.stockNumber[i] * this.stockPrices[i];
+                }
+            }
+            this.myChart.update();
+            this.sum = this.myChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+        }
+    }
+};
+</script>
+
+<style scoped>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+input[type='checkbox'] {
+    cursor: pointer;
+}
+</style>

@@ -3,6 +3,7 @@ import IndexView from '../views/IndexView.vue'
 import MenuView from '../views/MenuView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
+import CurrentView from '../views/CurrentView.vue'
 import SearchView from '../views/SearchView.vue'
 import CartView from '../views/CartView.vue'
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignupView
+  },
+  {
+    path: '/current',
+    name: 'current',
+    component: CurrentView
   },
   {
     path: '/search',

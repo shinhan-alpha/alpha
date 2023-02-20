@@ -11,27 +11,7 @@
   
   export default {
     name:"index",
-    data() {
-      return {
-        username: '',
-        password: '',
-        token: '',
-      };
-    },
-    methods: {
-      async login() {
-        try {
-          const response = await axios.post('http://127.0.0.1:8000/api/token', {
-            username: this.username,
-            password: this.password,
-          });
-          localStorage.setItem("access_token", response.data.access)
-          // this.token = response.data.access;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-    },
+      
   };
   </script>
   

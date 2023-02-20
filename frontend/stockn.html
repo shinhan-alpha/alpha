@@ -11,64 +11,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script>
     
-        $(function() 
-        {   
-            var searchRequest = null;
-            $("#stockName").autocomplete({
-          
-          source: function( request, response ) {
-            
-           // 이전 요청 초기화 
-		   if(searchRequest != null ) searchRequest.abort(); 
-           
-           // jquery의 $.ajax 명령
-            searchRequest = $.ajax({
-              url: "https://www.sedaily.com/Stock/Quote/JsonSearchData",  
-              type: "get", 
-              data: { text: $("#stockName").val() },
-              success: function(data)
-              {
-                var obj = data["Items"].map(function(v){
-                    return { 
-                      label : v.StockName +"(" + v.StockCode +")", 
-                      value : v.StockCode, 
-                      price : v.CurrentPrice,
-                      market : (v.Market==1)?"코스피":"코스닥",
-                      changes : (v.PreRate.indexOf('-')>0)? -v.PreGap:v.PreGap,
-                      changepct : v.PreRate,
-                      stockTime : v.StockTime,
-					            IndustryCode : v.IndustryCode
-                    }
-                });
-                response(obj);
-              },
-              dataType: "json",
-            });
-           
-          },
-          select: function( event, ui ) { 
-            // 항목을 선택하면 HTML 페이지에 전달/표시 
-            $(this).val(ui.item.label);
-            $("#stockCode").val(ui.item.value);
-            $("#stockPrice").html(ui.item.price);
-            $("#market").html(ui.item.market);
-            $("#changes").html(ui.item.changes);
-            $("#changepct").html(ui.item.changepct);
-            $("#stockTime").html(ui.item.stockTime);
-
-            return false;
-          },
-          focus : function(event, ui) { 
-              return false;
-          },     
-          autoFocus: true, 
-          minLength: 2 // 최소 글자수
-        });
-    });
-    </script>
-
     <style>
         body {
             margin:0;
