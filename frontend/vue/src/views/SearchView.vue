@@ -17,7 +17,9 @@
 
 <script>
 import $ from 'jquery'
+import axios from 'axios';
 export default {
+  name:'search',
   data() {
     return {
       searchText: '',
@@ -36,34 +38,42 @@ export default {
     }
   },
   methods: {
-    fetchData() {
-      if (this.searchRequest) {
-        this.searchRequest.abort()
+    async fetchData() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/stock/stock', {
+          value:this.value
+        });
+        // this.token = response.data.access;
+      } catch (error) {
+        console.log(error);
       }
-      if (this.searchText.length < 2) {
-        this.searchResults = []
-        return
-      }
-      this.searchRequest = $.ajax({
-        url: "https://sedaily.com/Stock/Quote/JsonSearchData",
-        type: "get",
-        data: { text: this.searchText },
-        success: (data) => {
-          this.searchResults = data.Items.map((item) => {
-            return {
-              label: item.StockName + '(' + item.StockCode + ')',
-              value: item.StockCode,
-              price: item.CurrentPrice,
-              market: (item.Market == 1) ? '코스피' : '코스닥',
-              changes: (item.PreRate.indexOf('-') > 0) ? -item.PreGap : item.PreGap,
-              changepct: item.PreRate,
-              stockTime: item.StockTime,
-              IndustryCode: item.IndustryCode,
-            }
-          })
-        },
-        dataType: "json",
-      })
+      // if (this.searchRequest) {
+      //   this.searchRequest.abort()
+      // }
+      // if (this.searchText.length < 2) {
+      //   this.searchResults = []
+      //   return
+      // }
+      // this.searchRequest = $.ajax({
+      //   url: "https://sedaily.com/Stock/Quote/JsonSearchData",
+      //   type: "get",
+      //   data: { text: this.searchText },
+      //   success: (data) => {
+      //     this.searchResults = data.Items.map((item) => {
+      //       return {
+      //         label: item.StockName + '(' + item.StockCode + ')',
+      //         value: item.StockCode,
+      //         price: item.CurrentPrice,
+      //         market: (item.Market == 1) ? '코스피' : '코스닥',
+      //         changes: (item.PreRate.indexOf('-') > 0) ? -item.PreGap : item.PreGap,
+      //         changepct: item.PreRate,
+      //         stockTime: item.StockTime,
+      //         IndustryCode: item.IndustryCode,
+      //       }
+      //     })
+      //   },
+      //   dataType: "json",
+      // })
     },
     selectResult(result) {
       this.selectedResult = result

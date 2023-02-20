@@ -3,6 +3,8 @@ import IndexView from '../views/IndexView.vue'
 import MenuView from '../views/MenuView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
+import SearchView from '../views/SearchView.vue'
+import CartView from '../views/CartView.vue'
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignupView
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: SearchView
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView
   },
 ]
 
