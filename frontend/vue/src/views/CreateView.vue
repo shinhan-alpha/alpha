@@ -34,11 +34,6 @@
                                     <td><input type="checkbox" v-model="stock.checked" @click="stockClick(stock)"></td>
                                     <td>{{ stock.name }}</td>
                                     <td><input type="text" class="percent" v-model="stock.price" placeholder="%" @input="updatePrice(stock, $event.target.value)" /></td>
-                                    <td>
-                                        <button type="button" @click="incrementQuantity(stock)">+</button>
-                                        {{ stock.quantity }}
-                                        <button type="button" @click="decrementQuantity(stock)">-</button>
-                                    </td>
                                 </tr>
                                 
                             </tbody>
@@ -53,7 +48,7 @@
     </div>
 </template>
 
-<script lang="js">
+<script >
     import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
     import { Pie } from 'vue-chartjs'
 
@@ -101,17 +96,8 @@
             stockClick(stock) {
                 stock.checked = true;
             },
-            incrementQuantity(stock) {
-                stock.quantity += 1;
-            },
-            decrementQuantity(stock) {
-                if (stock.quantity > 1){
-                    stock.quantity -= 1;
-                }
-            }
             }
     }
-    
 </script>
 
 <style scoped>

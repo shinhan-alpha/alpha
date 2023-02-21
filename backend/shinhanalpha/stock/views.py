@@ -59,7 +59,7 @@ class CartListView(
 class CartCreateView(
     mixins.CreateModelMixin,
     generics.GenericAPIView
-):  
+):
     serializer_class = CartCreateSerializer
 
     def get_queryset(self):

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
       <h2>알파카트(일괄매수)</h2>
+      <p>1001020-23203-2332 김신한</p>
+      <p>가능금액: {{ amount }}원</p>
       <table>
           <thead>
           <tr>
@@ -24,19 +26,13 @@
           </tbody>
       </table>
 
-      
-      <ul class="nav categorys mb-3">
-        <li class="nav-item" v-for="categoryItem in categoryList" v-bind:key="categoryItem">
-          <a class="nav-link category_item">
-            {{categoryItem}}
-          </a>
-        </li>
-      </ul>
-      <Pie :data="chartData" :options="options" />
       <h2>주문금액(합계) <span id="myValue">{{checkedStockPricesSum}}</span></h2>
       <button type="button" @click="modal">
         <img id="buy" src="../../../images/buy.png" alt="매수버튼"/>
       </button>
+      <h2>주식 포트폴리오</h2>
+      <Pie :data="chartData" :options="options" />
+    
       <div style="margin:50px;"></div>
   </div>
 
