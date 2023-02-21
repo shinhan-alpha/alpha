@@ -1,6 +1,7 @@
 <template>
   <div id="app">
       <h2>알파카트(일괄매수)</h2>
+      <div class="scrollable" ref="scrollable" v-on:scroll="handleScroll">
       <table>
           <thead>
           <tr>
@@ -16,18 +17,19 @@
               <td>{{ stock.name }}</td>
               <td>{{ stock.price }}</td>
               <td>
-                <button type="button" @click="incrementQuantity(stock)">+</button>
-                {{ stock.quantity }}
                 <button type="button" @click="decrementQuantity(stock)">-</button>
+                {{ stock.quantity }}
+                <button type="button" @click="incrementQuantity(stock)">+</button>
               </td>
           </tr>
           </tbody>
       </table>
-
-      
-      <button @click="selectedTab = 'first'">주식 포트폴리오</button>
-      <button @click="selectedTab = 'sec'">배당 포트폴리오</button>
-      <button @click="selectedTab = 'third'">총자산 포트폴리오</button>
+    </div>
+      <div class="tabs">
+        <div class="tab" @click="selectedTab = 'first'" :class="{ 'active': selectedTab === 'first' }">주식<br>포트폴리오</div>
+        <div class="tab" @click="selectedTab = 'sec'" :class="{ 'active': selectedTab === 'sec' }">배당<br>포트폴리오</div>
+        <div class="tab" @click="selectedTab = 'third'" :class="{ 'active': selectedTab === 'third' }">총자산<br>포트폴리오</div>
+      </div>
       <div v-if="selectedTab == 'first'">
         <div style="display:inline-block; width:200px">
           <Pie :data="chartData" :options="options"/>
@@ -57,7 +59,7 @@
       <button type="button" @click="add" style="background-color:white">
         종목추가
       </button>
-      <button type="button" @click="modal" style="background-color:blue">
+      <button type="button" @click="modal" style="background-color:skyblue">
         매수
       </button>
       <div style="margin:50px;"></div>
@@ -82,6 +84,10 @@ export default {
     return {
       categoryList: ['주식포트폴리오'],
       stocks: [
+      { name: "LG전자", price: "113,000", quantity: 1, checked: false },
+      { name: "현대차", price: "179,200", quantity: 1, checked: false },
+      { name: "삼성전자", price: "62,600", quantity: 1, checked: false },
+      { name: "대우중공업", price: "100,000", quantity: 1, checked: false },
       { name: "LG전자", price: "113,000", quantity: 1, checked: false },
       { name: "현대차", price: "179,200", quantity: 1, checked: false },
       { name: "삼성전자", price: "62,600", quantity: 1, checked: false },
@@ -141,11 +147,39 @@ export default {
       if (stock.quantity > 1){
         stock.quantity -= 1;
       }
-    }
+    },
+    handleScroll() {
+        const scrollable = this.$refs.scrollable;
+        if (scrollable.scrollTop + scrollable.offsetHeight >= scrollable.scrollHeight) {
+          console.log('맨 아래 도달');
+        }
+      }
   }
 }
 </script>
 <style scoped>
+.scrollable {
+    height: 170px;
+    overflow-y: scroll;
+  }
+ .tabs {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .tab {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    background-color: #ccc;
+  }
+  
+  .tab-content {
+    margin-top: 10px;
+  }
       table {
           border-collapse: collapse;
           width: 100%;
