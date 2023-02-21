@@ -1,14 +1,18 @@
 <template>
-  <tab-bar></tab-bar>
-  <router-view/>
+  <div>
+    <status-bar></status-bar>
+    <router-view style="margin-top: 38px;"/>
+    <tab-bar></tab-bar>
+  </div>
 </template>
 
 <script>
+import StatusBar from './components/StatusBar.vue'
 
 import TabBar from './components/TabBar.vue'
 
 export default {
-  components: {TabBar}
+  components: {TabBar, StatusBar}
 }
 </script>
 

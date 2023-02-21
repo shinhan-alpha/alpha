@@ -8,7 +8,7 @@
             <!-- <select id="stockList" v-model="selected">
                 <option v-for="option in options" :value="option.price">{{ option.stock }}</option>
             </select> -->
-            <a href="./stock1.html"><img src="../../../images/search.png"></a>    
+            <a href="./search"><img src="../../../images/search.png"></a>    
             <a @click="openModal = true"><img src="../../../images/cart.png"></a>
             <a href="#"><img src="../../../images/order.png"></a>
             <a href="#"><img src="../../../images/more.png"></a>
@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 body {
             margin:0;
         }
