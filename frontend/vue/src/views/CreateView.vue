@@ -33,7 +33,7 @@
                                 <tr v-for="(stock, index) in stocks" :key="index">
                                     <td><input type="checkbox" v-model="stock.checked" @click="stockClick(stock)"></td>
                                     <td>{{ stock.name }}</td>
-                                    <td><input type="text" class="percent" v-model="stock.price" placeholder="%" @input="updatePrice(stock, $event.target.value)" /></td>
+                                    <td><input type="text" class="percent" v-model="stock.price" placeholder="%" /></td>
                                 </tr>
                                 
                             </tbody>
