@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import mixins, generics
 
-from .serializers import StockSerializer, CartSerializer, CartCreateSerializer, CartDeleteSerializer
-from .models import Stock, Cart
+from .serializers import StockSerializer, CartSerializer, CartCreateSerializer, CartDeleteSerializer, BalanceSerializer
+from .models import Stock, Cart, Balance
 # Create your views here.
 
 class StockListView(
@@ -90,3 +90,16 @@ class CartDeleteView(
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, args, kwargs)
+    
+class BalanceListView(
+    mixins.ListModelMixin,
+    generics.GenericAPIView
+):
+    serializer_class = BalanceSerializer
+
+    def get_queryset(self):
+        balance = Balance.objects.all()
+        return balance
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, args, kwargs)
