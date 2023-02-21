@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Stock, Cart
+from .models import Stock, Cart, Balance
 
 class StockSerializer(serializers.ModelSerializer):
 
@@ -54,3 +54,9 @@ class CartDeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = '__all__'
+
+class BalanceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Balance
+        fields='__all__'

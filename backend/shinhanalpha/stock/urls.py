@@ -6,4 +6,5 @@ urlpatterns = [
     path("/cart", views.CartCreateView.as_view()),
     path("/<int:pk>", views.StockDetailView.as_view()),
     path("/", views.StockListView.as_view()),
+    path("/balance", views.BalanceListView.as_view())
 ]
