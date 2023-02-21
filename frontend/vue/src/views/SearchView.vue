@@ -1,73 +1,69 @@
 <template>
   <div>
-    <input type="text" id="stockName" v-model="searchText" @input="fetchData">
-    <ul v-show="searchResults.length">
-      <li v-for="(result, index) in searchResults" :key="index" @click="selectResult(result)">
-        {{ result.label }}
-      </li>
+    <input type="text" v-model="query" @input="searchStocks" placeholder="Search stocks" />
+    <ul>
+      <li v-for="stock in stocks" :key="stock.stockCode" @click="curstock(stock)">{{ stock.stockName }} - {{ stock.stockCode }}</li>
     </ul>
-    <input type="hidden" id="stockCode" v-model="selectedResult.value">
-    <div>Price: <span id="stockPrice">{{ selectedResult.price }}</span></div>
-    <div>Market: <span id="market">{{ selectedResult.market }}</span></div>
-    <div>Changes: <span id="changes">{{ selectedResult.changes }}</span></div>
-    <div>Change Percentage: <span id="changepct">{{ selectedResult.changepct }}</span></div>
-    <div>Stock Time: <span id="stockTime">{{ selectedResult.stockTime }}</span></div>
   </div>
 </template>
-
+<!-- /*
+        https://www.sedaily.com/Stock/Quote/JsonSearchData?text=LG전자
+       
+       JSON Data Format
+       { "Items": 
+        [ {"Market":"1","IndustryCode":"013","StockCode":"066570","StockName":"LG전자","CurrentPrice":"92,900","PreGap":"400","PreRate":"+0.43","Change":"2","Initial":"E","StockTime":"153004"},
+          {"Market":"1","IndustryCode":"013","StockCode":"066575","StockName":"LG전자우","CurrentPrice":"45,100","PreGap":"250","PreRate":"-0.55","Change":"5","Initial":"E","StockTime":"153030"}
+        ]
+       }
+       */ -->
 <script>
-import $ from 'jquery'
+import axios from 'axios';
+import store from '../store'
+
 export default {
   data() {
     return {
-      searchText: '',
-      searchResults: [],
-      selectedResult: {
-        label: '',
-        value: '',
-        price: '',
-        market: '',
-        changes: '',
-        changepct: '',
-        stockTime: '',
-        IndustryCode: '',
-      },
-      searchRequest: null,
+      query: '',
+      stocks: [],
+      searchRequest: null
     }
   },
   methods: {
-    fetchData() {
+    curstock(stock) {
+      console.log(stock)
+      this.$store.commit('curStock', stock)
+      this.$router.push('/current');
+    },
+    searchStocks() {
       if (this.searchRequest) {
-        this.searchRequest.abort()
+        this.searchRequest.cancel(); // cancel previous request
       }
-      if (this.searchText.length < 2) {
-        this.searchResults = []
-        return
-      }
-      this.searchRequest = $.ajax({
-        url: "https://sedaily.com/Stock/Quote/JsonSearchData",
-        type: "get",
-        data: { text: this.searchText },
-        success: (data) => {
-          this.searchResults = data.Items.map((item) => {
-            return {
-              label: item.StockName + '(' + item.StockCode + ')',
-              value: item.StockCode,
-              price: item.CurrentPrice,
-              market: (item.Market == 1) ? '코스피' : '코스닥',
-              changes: (item.PreRate.indexOf('-') > 0) ? -item.PreGap : item.PreGap,
-              changepct: item.PreRate,
-              stockTime: item.StockTime,
-              IndustryCode: item.IndustryCode,
-            }
-          })
-        },
-        dataType: "json",
+      this.searchRequest = axios.CancelToken.source();
+      axios.get('http://www.sedaily.com/Stock/Quote/JsonSearchData', {
+        params: { text: this.query },
+        cancelToken: this.searchRequest.token // use the cancel token
       })
-    },
-    selectResult(result) {
-      this.selectedResult = result
-    },
-  },
+      .then(response => {
+        const items = response.data.Items;
+        const formattedData = items.map(item => {
+          return {
+            stockName: item.StockName,
+            stockCode: item.StockCode,
+            currentPrice: item.CurrentPrice,
+            preGap: item.PreGap,
+            preRate: item.PreRate,
+          };
+        });
+        this.stocks = formattedData;
+      })
+      .catch(error => {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled', error.message);
+        } else {
+          console.log(error);
+        }
+      });
+    }
+  }
 }
 </script>

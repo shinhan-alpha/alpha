@@ -4,6 +4,7 @@
                 <tr>
                     <th id="menu-tab"><a href="/menu"><font-awesome-icon icon="fa-solid fa-bars" /></a></th>
                     <th><router-link to="/">홈</router-link></th>
+                    <th><router-link to="/menu">홈</router-link></th>
                     <th><router-link to="/interest">관심<br>종목</router-link></th>
                     <th><router-link to="/current">현재가</router-link></th>
                     <th><router-link to="/order">주식<br>주문</router-link></th>

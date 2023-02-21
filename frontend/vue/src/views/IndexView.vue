@@ -6,18 +6,14 @@
   </div>
 </template>
   
-<script>
-
-export default {
-  name:"index",
-  data() {
-
-  },
-  methods: {
-
-  },
-};
-</script>
+  <script>
+  import axios from 'axios';
+  
+  export default {
+    name:"index",
+      
+  };
+  </script>
   
 <style scoped>
   /* index */
