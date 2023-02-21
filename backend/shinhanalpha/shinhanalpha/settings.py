@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'stock.apps.StockConfig',
     'member.apps.MemberConfig',
-
+    'portfolio.apps.PortfolioConfig',
 ]
 
 MIDDLEWARE = [
