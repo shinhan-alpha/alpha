@@ -1,104 +1,112 @@
 <template>
   <div id="login-page">
-    <div id="login-form">
-      <img src="../../../images\shinhan_ci.jpg" style="width:200px; height:50px;" alt="My Image">
-      <h2>신한투자증권 로그인</h2>
-      <form @submit.prevent="fnLogin">
-        <div>
-          <input type="text" name="uid" placeholder="아이디" v-model="user_id" style="height: 35px;">
-        </div>
-        <div>
-          <input type="password" name="password" placeholder="비밀번호" v-model="user_pw" style="height: 35px;">
-        </div>
-        <div>
-          <button type="submit" style="height: 35px;">로그인</button>
-        </div>
-        <div class="forgot-password">
-          <a href="#">비밀번호 찾기</a>
-        </div>
-      </form>
-    </div>
+    <div class="top">
+          <div class="logo">
+              <img src="../../../images/shinhan_ci.jpg">
+          </div>
+      </div>
+      <div class="main">
+          <h2>로그인</h2>
+          <form>
+              <input class="info" type="text" v-model="username" placeholder="아이디"><br><br>
+              <input class="info" type="password" v-model="password" placeholder="비밀번호"><br><br>
+              <input id="login" type="button" value="로그인" @click="login">
+          </form>
+      </div>
+      <div class="bottom">
+          <div class="logo">
+              <img src="../../../images/shinhan_ad.png">
+          </div>
+      </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      user_id: '',
-      user_pw: ''
-    }
+      username: '',
+      password: '',
+      token: '',
+    };
   },
   methods: {
-    fnLogin() {
-      if (this.user_id === '') {
-        alert('아이디를 입력하시오')
-        return
+    async login() {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/token', {
+          username: this.username,
+          password: this.password,
+        });
+        localStorage.setItem("access_token", response.data.access)
+        // this.token = response.data.access;
+        location.href='/'
+      } catch (error) {
+        alert('로그인 실패');
+        console.log(error);
       }
-      if (this.user_pw === '') {
-        alert('비밀번호를 입력하시오')
-        return
-      }
-      alert('로그인 성공!')
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-#login-page {
-  background-image: url('https://cdn.pixabay.com/photo/2015/09/04/23/22/facebook-923828_1280.jpg');
-  background-size: cover;
-  height: 568px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  /* top */
+  .top {
+      text-align: center;
+      margin-top: 10vh;
+      display: table;
+  }
+  .logo img {
+      max-width: 100%;
+      max-height: 100%;
+  }
 
-#login-form {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  max-width: 300px;
-  margin: 0 auto;
-}
+  /* main */
+  .main {
+      top: 30%;
+      width: 100%;
+      text-align: center;
+      background-color: #E8F1FE;
+      border-radius: 20px;
+      padding-top: 1vh;
+      padding-bottom: 1vh;
+  }
+  .main h2 {
+      text-align: left;
+      padding-left: 5vh;
+      margin-bottom: 0;
+      color: #478BE1;
+  }
+  .main form {
+      border-radius: 20px;
+      padding: 10vw;
+  }
+  .main form input {
+      width: 100%;
+      height: 25px;
+      font: 20px;
+      background-color: #E8F1FE;
+  }
+  .main .info {
+      border-top: 0px;
+      border-right: 0px;
+      border-left: 0px;
+      border-bottom-style: #D3D6D9;
+  }
+  #login {
+      border: none;
+      background-color: #478BE1;
+      color: white;
+      border-radius: 20px;
+      height: 7vh;
+  }
 
-h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  color: #1877f2;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-button {
-  background-color: #1877f2;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.forgot-password {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 14px;
-}
-
-a {
-  color: #1877f2;
-  text-decoration: none;
-}
+  /* bottom */
+  .bottom {
+      text-align: center;
+      display: table;
+      margin-top: 57px;
+  }
 </style>

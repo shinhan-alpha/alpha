@@ -8,8 +8,8 @@
         <input type="text" class="form-control" v-model="username" placeholder="이름" />
       </div>
       <div class="form-group">
-        <label for="tel">전화번호</label>
-        <input type="text" class="form-control" v-model="tel" placeholder="전화번호" />
+        <label for="acct_pw">계좌비번</label>
+        <input type="text" class="form-control" v-model="acct_pw" placeholder="전화번호" />
       </div>
       <div class="form-group">
         <label for="password">비밀번호</label>
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       username: "",
-      tel: "",
+      acct_pw: "",
       password: "",
       password_check: "",
     };
@@ -49,7 +49,7 @@ export default {
 
       const data = {
         username: this.username,
-        tel: this.tel,
+        acct_pw: this.acct_pw,
         password: this.password,
         password_check: this.password_check,
       };

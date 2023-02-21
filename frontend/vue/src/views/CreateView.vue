@@ -9,7 +9,7 @@
             <div class="main-top">
                 <span>문민제</span>님의 목표 자산 포트폴리오
                 <div class="pie-chart">
-                    <Pie :data="data" :options="options" />
+                    <Pie :data="chartData" :options="options" />
                 </div>
                 <hr>
             </div>
@@ -30,35 +30,15 @@
                                 </colgroup>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th><input type="checkbox" v-model="isChecked" @click="asd()"/></th>  
-                                    <th><span>주식</span></th>                          
-                                    <th class="question" onclick=""><font-awesome-icon icon="fa-solid fa-circle-question" /></th>
-                                    <th><input type="text" class="percent" v-model="stock"  placeholder="%"></th>
-                                </tr> 
-                                <tr>
-                                    <th><input type="checkbox"/></th>  
-                                    <th><span>채권</span></th>                          
-                                    <th class="question" onclick=""><font-awesome-icon icon="fa-solid fa-circle-question"/></th>
-                                    <th><input type="text" class="percent" v-model="bond" placeholder="%"></th>
-                                </tr>
-                                <tr>
-                                    <th><input type="checkbox"/></th>  
-                                    <th><span>실물자산</span></th>                          
-                                    <th class="question" onclick=""><font-awesome-icon icon="fa-solid fa-circle-question"/></th>
-                                    <th><input type="text" class="percent" v-model="realasset" placeholder="%"></th>
-                                </tr>
-                                <tr>
-                                    <th><input type="checkbox"/></th>  
-                                    <th><span>가상화폐</span></th>                          
-                                    <th class="question" onclick=""><font-awesome-icon icon="fa-solid fa-circle-question"/></th>
-                                    <th><input type="text" class="percent" v-model="cryptocurrency" placeholder="%"></th>
-                                </tr>
+                                <tr v-for="(asset, index) in assets" :key="index">
+                                    <td>{{ asset.name }}</td>
+                                    <td><input type="text" class="percent" v-model="asset.percent" placeholder="%" /></td>
+                                </tr>                          
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div id="save" onclick="">
+                <div id="save" @click=updatePort()>
                     <span>설정 완료</span>
                 </div>
             </div>
@@ -66,40 +46,72 @@
     </div>
 </template>
 
-<script lang="js">
-    import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-    import { Pie } from 'vue-chartjs'
+<script >
+import axios from 'axios';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Pie } from 'vue-chartjs'
 
-    ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend)
 
-    export default {
-    name: 'App',
+export default {
+    name: 'CreateView',
     components: {
         Pie
     },
     data() {
         return {
-        data: {
-            isChecked: false,
+            assets: [
+                { name: "주식", percent: "" },
+                { name: "채권", percent: "" },
+                { name: "실물자산", percent: "" },
+                { name: "가상화폐", percent: "" },
+            ],
             stock: '',
-            datasets: [
-            {
-                backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                data: [80, 50, 50, 50]
-            }
-            ]
-        },
-        methods: {
-            asd() {
-                console.log(this.stock)
-            }
+            bond: '',
+            real_asset: '',
+            crypto:'',
         }
+    },
+    computed:{
+        chartData() {
+            const checkedStockNames = this.assets.map(asset => asset.name);
+            const checkedStockPrices = this.assets.map(asset => Number(asset.percent));
+            return {
+            labels: checkedStockNames,
+            datasets: [
+                {
+                backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                data: checkedStockPrices
+                }
+            ],
+            };
+        },
+    },
+    methods: {
+        updatePort() {
+            const data = {
+                stock: this.stock,
+                bond: this.bond,
+                real_asset: this.real_asset,
+                crypto: this.crypto,
+            };
+            axios
+                .post("http://127.0.0.1:8000/api/stock", data)
+                .then(() => {
+                    alert('포트폴리오 반영');
+                })
+                .catch((error) => {
+                    let errorMsg = "";
+                });
         }
     }
     }
 </script>
 
 <style scoped>
+tr:nth-child(odd) {
+          background-color: #a5a5a5;
+      }
     /* topbar */
     #top-wrapper {
         text-align: left;

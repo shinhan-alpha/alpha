@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/stock', include('stock.urls')),
     path('api/member', include('member.urls')),
     path('api/token', TokenObtainPairView.as_view()),
+    path('api/portfolio', include('portfolio.urls')),
 ]
