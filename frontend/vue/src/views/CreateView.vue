@@ -74,29 +74,29 @@ export default {
     },
     computed:{
         chartData() {
-            const checkedStockNames = this.assets.map(asset => asset.name);
-            const checkedStockPrices = this.assets.map(asset => Number(asset.percent));
+            const assetNames = this.assets.map(asset => asset.name);
+            const assetPrices = this.assets.map(asset => Number(asset.percent));
             return {
-            labels: checkedStockNames,
-            datasets: [
-                {
-                backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                data: checkedStockPrices
-                }
-            ],
+                labels: assetNames,
+                datasets: [
+                    {
+                    backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                    data: assetPrices
+                    }
+                ],
             };
         },
     },
     methods: {
         updatePort() {
             const data = {
-                stock: this.stock,
-                bond: this.bond,
-                real_asset: this.real_asset,
-                crypto: this.crypto,
+                stock: Number(this.stock),
+                bond: Number(this.bond),
+                real_asset: Number(this.real_asset),
+                crypto: Number(this.crypto),
             };
             axios
-                .post("http://127.0.0.1:8000/api/stock", data)
+                .post("http://127.0.0.1:8000/api/portfolio/", data)
                 .then(() => {
                     alert('포트폴리오 반영');
                 })

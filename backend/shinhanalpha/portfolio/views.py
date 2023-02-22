@@ -1,9 +1,7 @@
-from django.shortcuts import render
 from rest_framework import mixins, generics
-
-from .serializers import PortfolioSerializer, PortfolioCreateSerializer
-
+from .serializers import PortfolioSerializer
 from .models import Portfolio, Dividend
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class PortfolioListView(
@@ -11,36 +9,22 @@ class PortfolioListView(
     mixins.CreateModelMixin,
     generics.GenericAPIView
 ):
-    serializer_class = PortfolioSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return PortfolioSerializer
+
+    def get_permission_class(self):
+        if self.request.method == 'POST':
+            return [IsAuthenticated]
+        return 
 
     def get_queryset(self):
-        portfolio_id = self.kwargs.get('portfolio_id')
-        if portfolio_id:
-            return Portfolio.objects.filter(portfolio_id=portfolio_id) \
-                .select_related('user', 'stock') \
-                .stock_by('-id')
-        return Portfolio.objects.none()
+        pk = self.kwargs.get('pk')
+        return Portfolio.objects.filter(member_id = pk).order_by('-id')
 
     def get(self,request, *args, **kwargs):
         return self.list(request, args, kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        return self.create(request, args, kwargs)
-
-
-class PortfolioCreateView(
-    mixins.CreateModelMixin,
-    generics.GenericAPIView
-):  
-    serializer_class = PortfolioCreateSerializer
-
-    def get_queryset(self):
-        portfolio_id = self.kwargs.get('portfolio_id')
-        if portfolio_id:
-            return Portfolio.objects.filter(portfolio_id=portfolio_id) \
-                .select_related('user', 'stock') \
-                .filter()
-        return Portfolio.objects.none()
     
     def post(self, request, *args, **kwargs):
         return self.create(request, args, kwargs)
